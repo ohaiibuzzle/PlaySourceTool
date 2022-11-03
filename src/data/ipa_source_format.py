@@ -1,4 +1,5 @@
 import json
+import exceptions.ipa_source_exceptions as ipa_source_exceptions
 
 
 class IPASourceFormat:
@@ -36,6 +37,22 @@ class IPASourceFormat:
             json["itunesLookup"],
             json["link"],
         )
+
+    def validate(self):
+        # iTunes Lookup is optional, but must start with https://
+        if self.itunesLookup != "":
+            if not self.itunesLookup.startswith("https://"):
+                raise ipa_source_exceptions.LinkIsNotHTTPS
+
+        if self.link != "":
+            # Link must end with .ipa and start with https://
+            if not self.link.endswith(".ipa"):
+                raise ipa_source_exceptions.LinkIsNotIPA
+
+            if not self.link.startswith("https://"):
+                raise ipa_source_exceptions.LinkIsNotHTTPS
+
+        return True
 
     class JSONEncoder(json.JSONEncoder):
         def default(self, o):

@@ -3,6 +3,7 @@ from . import dialog_impl
 from PySide6 import QtCore, QtGui, QtWidgets
 import json
 from data.ipa_source_format import IPASourceFormat
+import exceptions.ipa_source_exceptions as ipa_source_exceptions
 
 
 class SourceInterface(interface.Ui_SourceMainWindow):
@@ -92,9 +93,21 @@ class SourceInterface(interface.Ui_SourceMainWindow):
         if not self.app_list:
             self.app_list = []
 
-        self.app_list = self.app_list + [
-            IPASourceFormat(bundleID, name, version, itunesLookup, link)
-        ]
+        new_item = IPASourceFormat(bundleID, name, version, itunesLookup, link)
+
+        try:
+            new_item.validate()
+        except ipa_source_exceptions.IPASourceException as e:
+            # Show an error message
+            msg = QtWidgets.QMessageBox()
+            msg.setIcon(QtWidgets.QMessageBox.Icon.Warning)
+            msg.setText("An error occured")
+            msg.setInformativeText(e.message)
+            msg.setStandardButtons(QtWidgets.QMessageBox.StandardButton.Ok)
+            msg.exec()
+            return
+
+        self.app_list = self.app_list + []
 
     def remove_btn_onClick(self):
         # If nothing is selected, return
@@ -104,27 +117,39 @@ class SourceInterface(interface.Ui_SourceMainWindow):
         self.app_list.pop(self.AppsTable.currentRow())
 
     def table_edit(self, row, column):
-        # If the index don't exist, create it
-        if len(self.app_list) <= row:
-            self.app_list = self.app_list + [
-                IPASourceFormat(
-                    self.AppsTable.item(row, 0).text(),
-                    self.AppsTable.item(row, 1).text(),
-                    self.AppsTable.item(row, 2).text(),
-                    self.AppsTable.item(row, 3).text(),
-                    self.AppsTable.item(row, 4).text(),
-                )
-            ]
-            return
+        # 4th and 5th column must be a valid URL with HTTPS
 
-        # Update the item
-        self.app_list[row] = IPASourceFormat(
+        new_item = IPASourceFormat(
             self.AppsTable.item(row, 0).text(),
             self.AppsTable.item(row, 1).text(),
             self.AppsTable.item(row, 2).text(),
             self.AppsTable.item(row, 3).text(),
             self.AppsTable.item(row, 4).text(),
         )
+
+        # Perform input validation
+        try:
+            new_item.validate()
+        except ipa_source_exceptions.IPASourceException as e:
+            # If the input is invalid, show an error dialog
+            dialog = QtWidgets.QMessageBox()
+            dialog.setIcon(QtWidgets.QMessageBox.Icon.Warning)
+            dialog.setText("An error occured")
+            dialog.setInformativeText(e.message)
+            dialog.setModal(True)
+            dialog.exec()
+
+            # Reject the edit
+            self.update_table()
+            return
+
+        # If the index don't exist, create it
+        if len(self.app_list) <= row:
+            self.app_list = self.app_list + [new_item]
+            return
+
+        # Update the item
+        self.app_list[row] = new_item
 
     def save_commandLinkButton_onClick(self):
         # Open a file selection dialog
