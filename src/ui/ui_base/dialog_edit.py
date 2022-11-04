@@ -16,24 +16,18 @@ from PySide6.QtGui import (QBrush, QColor, QConicalGradient, QCursor,
     QImage, QKeySequence, QLinearGradient, QPainter,
     QPalette, QPixmap, QRadialGradient, QTransform)
 from PySide6.QtWidgets import (QAbstractButton, QApplication, QDialog, QDialogButtonBox,
-    QFormLayout, QGridLayout, QLabel, QLineEdit,
-    QSizePolicy, QVBoxLayout, QWidget)
+    QFormLayout, QGridLayout, QHBoxLayout, QLabel,
+    QLayout, QLineEdit, QPushButton, QSizePolicy,
+    QVBoxLayout, QWidget)
 
 class Ui_AddSourceDialog(object):
     def setupUi(self, AddSourceDialog):
         if not AddSourceDialog.objectName():
             AddSourceDialog.setObjectName(u"AddSourceDialog")
         AddSourceDialog.setWindowModality(Qt.ApplicationModal)
-        AddSourceDialog.resize(400, 221)
+        AddSourceDialog.resize(400, 255)
         self.gridLayout = QGridLayout(AddSourceDialog)
         self.gridLayout.setObjectName(u"gridLayout")
-        self.buttonBox = QDialogButtonBox(AddSourceDialog)
-        self.buttonBox.setObjectName(u"buttonBox")
-        self.buttonBox.setOrientation(Qt.Horizontal)
-        self.buttonBox.setStandardButtons(QDialogButtonBox.Cancel|QDialogButtonBox.Ok)
-
-        self.gridLayout.addWidget(self.buttonBox, 1, 0, 1, 1)
-
         self.verticalLayout = QVBoxLayout()
         self.verticalLayout.setObjectName(u"verticalLayout")
         self.formLayout = QFormLayout()
@@ -98,6 +92,24 @@ class Ui_AddSourceDialog(object):
 
         self.gridLayout.addLayout(self.verticalLayout, 0, 0, 1, 1)
 
+        self.horizontalLayout = QHBoxLayout()
+        self.horizontalLayout.setObjectName(u"horizontalLayout")
+        self.horizontalLayout.setSizeConstraint(QLayout.SetDefaultConstraint)
+        self.query_btn = QPushButton(AddSourceDialog)
+        self.query_btn.setObjectName(u"query_btn")
+
+        self.horizontalLayout.addWidget(self.query_btn)
+
+        self.buttonBox = QDialogButtonBox(AddSourceDialog)
+        self.buttonBox.setObjectName(u"buttonBox")
+        self.buttonBox.setOrientation(Qt.Horizontal)
+        self.buttonBox.setStandardButtons(QDialogButtonBox.Cancel|QDialogButtonBox.Ok)
+
+        self.horizontalLayout.addWidget(self.buttonBox)
+
+
+        self.gridLayout.addLayout(self.horizontalLayout, 2, 0, 1, 1)
+
 
         self.retranslateUi(AddSourceDialog)
         self.buttonBox.accepted.connect(AddSourceDialog.accept)
@@ -113,5 +125,6 @@ class Ui_AddSourceDialog(object):
         self.version_label.setText(QCoreApplication.translate("AddSourceDialog", u"App Version", None))
         self.appname_label.setText(QCoreApplication.translate("AddSourceDialog", u"Bundle ID", None))
         self.bundleid_label.setText(QCoreApplication.translate("AddSourceDialog", u"App Name", None))
+        self.query_btn.setText(QCoreApplication.translate("AddSourceDialog", u"Query iTunes Data", None))
     # retranslateUi
 

@@ -38,6 +38,8 @@ class Ui_SourceMainWindow(object):
         self.actionRemove_Item.setObjectName(u"actionRemove_Item")
         self.actionNew = QAction(SourceMainWindow)
         self.actionNew.setObjectName(u"actionNew")
+        self.actionSave_As = QAction(SourceMainWindow)
+        self.actionSave_As.setObjectName(u"actionSave_As")
         self.centralwidget = QWidget(SourceMainWindow)
         self.centralwidget.setObjectName(u"centralwidget")
         sizePolicy = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
@@ -50,32 +52,14 @@ class Ui_SourceMainWindow(object):
         self.gridLayout = QGridLayout()
         self.gridLayout.setObjectName(u"gridLayout")
         self.gridLayout.setSizeConstraint(QLayout.SetNoConstraint)
-        self.horizontalSpacer = QSpacerItem(40, 20, QSizePolicy.Fixed, QSizePolicy.Minimum)
-
-        self.gridLayout.addItem(self.horizontalSpacer, 0, 1, 1, 1)
-
-        self.AppsTable = QTableWidget(self.centralwidget)
-        if (self.AppsTable.columnCount() < 5):
-            self.AppsTable.setColumnCount(5)
-        __qtablewidgetitem = QTableWidgetItem()
-        self.AppsTable.setHorizontalHeaderItem(0, __qtablewidgetitem)
-        __qtablewidgetitem1 = QTableWidgetItem()
-        self.AppsTable.setHorizontalHeaderItem(1, __qtablewidgetitem1)
-        __qtablewidgetitem2 = QTableWidgetItem()
-        self.AppsTable.setHorizontalHeaderItem(2, __qtablewidgetitem2)
-        __qtablewidgetitem3 = QTableWidgetItem()
-        self.AppsTable.setHorizontalHeaderItem(3, __qtablewidgetitem3)
-        __qtablewidgetitem4 = QTableWidgetItem()
-        self.AppsTable.setHorizontalHeaderItem(4, __qtablewidgetitem4)
-        self.AppsTable.setObjectName(u"AppsTable")
-        self.AppsTable.setSelectionBehavior(QAbstractItemView.SelectRows)
-
-        self.gridLayout.addWidget(self.AppsTable, 0, 0, 1, 1)
-
         self.verticalLayout = QVBoxLayout()
         self.verticalLayout.setSpacing(0)
         self.verticalLayout.setObjectName(u"verticalLayout")
         self.verticalLayout.setSizeConstraint(QLayout.SetMinimumSize)
+        self.verticalSpacer = QSpacerItem(20, 40, QSizePolicy.Minimum, QSizePolicy.Expanding)
+
+        self.verticalLayout.addItem(self.verticalSpacer)
+
         self.Button_Add = QPushButton(self.centralwidget)
         self.Button_Add.setObjectName(u"Button_Add")
         sizePolicy1 = QSizePolicy(QSizePolicy.Minimum, QSizePolicy.Fixed)
@@ -93,7 +77,28 @@ class Ui_SourceMainWindow(object):
         self.verticalLayout.addWidget(self.Button_Remove)
 
 
-        self.gridLayout.addLayout(self.verticalLayout, 0, 2, 1, 1)
+        self.gridLayout.addLayout(self.verticalLayout, 0, 1, 1, 1)
+
+        self.AppsTable = QTableWidget(self.centralwidget)
+        if (self.AppsTable.columnCount() < 5):
+            self.AppsTable.setColumnCount(5)
+        __qtablewidgetitem = QTableWidgetItem()
+        self.AppsTable.setHorizontalHeaderItem(0, __qtablewidgetitem)
+        __qtablewidgetitem1 = QTableWidgetItem()
+        self.AppsTable.setHorizontalHeaderItem(1, __qtablewidgetitem1)
+        __qtablewidgetitem2 = QTableWidgetItem()
+        self.AppsTable.setHorizontalHeaderItem(2, __qtablewidgetitem2)
+        __qtablewidgetitem3 = QTableWidgetItem()
+        self.AppsTable.setHorizontalHeaderItem(3, __qtablewidgetitem3)
+        __qtablewidgetitem4 = QTableWidgetItem()
+        self.AppsTable.setHorizontalHeaderItem(4, __qtablewidgetitem4)
+        self.AppsTable.setObjectName(u"AppsTable")
+        self.AppsTable.setEditTriggers(QAbstractItemView.NoEditTriggers)
+        self.AppsTable.setAlternatingRowColors(True)
+        self.AppsTable.setSelectionBehavior(QAbstractItemView.SelectRows)
+        self.AppsTable.setSortingEnabled(False)
+
+        self.gridLayout.addWidget(self.AppsTable, 0, 0, 1, 1)
 
 
         self.gridLayout_2.addLayout(self.gridLayout, 0, 0, 1, 1)
@@ -117,6 +122,7 @@ class Ui_SourceMainWindow(object):
         self.menuFile.addSeparator()
         self.menuFile.addAction(self.actionOpen_Database)
         self.menuFile.addAction(self.actionSave_Database)
+        self.menuFile.addAction(self.actionSave_As)
         self.menuFile.addSeparator()
         self.menuFile.addAction(self.actionExit)
         self.menuEdit.addAction(self.actionAdd_Item)
@@ -147,6 +153,9 @@ class Ui_SourceMainWindow(object):
         self.actionRemove_Item.setShortcut(QCoreApplication.translate("SourceMainWindow", u"Ctrl+Backspace", None))
 #endif // QT_CONFIG(shortcut)
         self.actionNew.setText(QCoreApplication.translate("SourceMainWindow", u"New...", None))
+        self.actionSave_As.setText(QCoreApplication.translate("SourceMainWindow", u"Save As...", None))
+        self.Button_Add.setText(QCoreApplication.translate("SourceMainWindow", u"Add", None))
+        self.Button_Remove.setText(QCoreApplication.translate("SourceMainWindow", u"Remove", None))
         ___qtablewidgetitem = self.AppsTable.horizontalHeaderItem(0)
         ___qtablewidgetitem.setText(QCoreApplication.translate("SourceMainWindow", u"Bundle ID", None));
         ___qtablewidgetitem1 = self.AppsTable.horizontalHeaderItem(1)
@@ -157,8 +166,6 @@ class Ui_SourceMainWindow(object):
         ___qtablewidgetitem3.setText(QCoreApplication.translate("SourceMainWindow", u"iTunes Link", None));
         ___qtablewidgetitem4 = self.AppsTable.horizontalHeaderItem(4)
         ___qtablewidgetitem4.setText(QCoreApplication.translate("SourceMainWindow", u"Download Link", None));
-        self.Button_Add.setText(QCoreApplication.translate("SourceMainWindow", u"Add", None))
-        self.Button_Remove.setText(QCoreApplication.translate("SourceMainWindow", u"Remove", None))
         self.menuFile.setTitle(QCoreApplication.translate("SourceMainWindow", u"File", None))
         self.menuEdit.setTitle(QCoreApplication.translate("SourceMainWindow", u"Edit", None))
     # retranslateUi

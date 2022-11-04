@@ -27,61 +27,26 @@
        <enum>QLayout::SetNoConstraint</enum>
       </property>
       <item row="0" column="1">
-       <spacer name="horizontalSpacer">
-        <property name="orientation">
-         <enum>Qt::Horizontal</enum>
-        </property>
-        <property name="sizeType">
-         <enum>QSizePolicy::Fixed</enum>
-        </property>
-        <property name="sizeHint" stdset="0">
-         <size>
-          <width>40</width>
-          <height>20</height>
-         </size>
-        </property>
-       </spacer>
-      </item>
-      <item row="0" column="0">
-       <widget class="QTableWidget" name="AppsTable">
-        <property name="selectionBehavior">
-         <enum>QAbstractItemView::SelectRows</enum>
-        </property>
-        <column>
-         <property name="text">
-          <string>Bundle ID</string>
-         </property>
-        </column>
-        <column>
-         <property name="text">
-          <string>Name</string>
-         </property>
-        </column>
-        <column>
-         <property name="text">
-          <string>Version</string>
-         </property>
-        </column>
-        <column>
-         <property name="text">
-          <string>iTunes Link</string>
-         </property>
-        </column>
-        <column>
-         <property name="text">
-          <string>Download Link</string>
-         </property>
-        </column>
-       </widget>
-      </item>
-      <item row="0" column="2">
-       <layout class="QVBoxLayout" name="verticalLayout" stretch="0,0">
+       <layout class="QVBoxLayout" name="verticalLayout" stretch="0,0,0">
         <property name="spacing">
          <number>0</number>
         </property>
         <property name="sizeConstraint">
          <enum>QLayout::SetMinimumSize</enum>
         </property>
+        <item>
+         <spacer name="verticalSpacer">
+          <property name="orientation">
+           <enum>Qt::Vertical</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>20</width>
+            <height>40</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
         <item>
          <widget class="QPushButton" name="Button_Add">
           <property name="sizePolicy">
@@ -110,6 +75,47 @@
         </item>
        </layout>
       </item>
+      <item row="0" column="0">
+       <widget class="QTableWidget" name="AppsTable">
+        <property name="editTriggers">
+         <set>QAbstractItemView::NoEditTriggers</set>
+        </property>
+        <property name="alternatingRowColors">
+         <bool>true</bool>
+        </property>
+        <property name="selectionBehavior">
+         <enum>QAbstractItemView::SelectRows</enum>
+        </property>
+        <property name="sortingEnabled">
+         <bool>false</bool>
+        </property>
+        <column>
+         <property name="text">
+          <string>Bundle ID</string>
+         </property>
+        </column>
+        <column>
+         <property name="text">
+          <string>Name</string>
+         </property>
+        </column>
+        <column>
+         <property name="text">
+          <string>Version</string>
+         </property>
+        </column>
+        <column>
+         <property name="text">
+          <string>iTunes Link</string>
+         </property>
+        </column>
+        <column>
+         <property name="text">
+          <string>Download Link</string>
+         </property>
+        </column>
+       </widget>
+      </item>
      </layout>
     </item>
    </layout>
@@ -131,6 +137,7 @@
     <addaction name="separator"/>
     <addaction name="actionOpen_Database"/>
     <addaction name="actionSave_Database"/>
+    <addaction name="actionSave_As"/>
     <addaction name="separator"/>
     <addaction name="actionExit"/>
    </widget>
@@ -185,6 +192,11 @@
   <action name="actionNew">
    <property name="text">
     <string>New...</string>
+   </property>
+  </action>
+  <action name="actionSave_As">
+   <property name="text">
+    <string>Save As...</string>
    </property>
   </action>
  </widget>

@@ -5,10 +5,9 @@ import sys
 
 def main():
     app = QtWidgets.QApplication(sys.argv)
-    MainWindow = QtWidgets.QMainWindow()
-    ui = interface_impl.SourceInterface()
-    ui.setupUi(MainWindow)
-    MainWindow.show()
+    mainWindow = interface_impl.SourceInterface()
+    mainWindow.setupUi(mainWindow)
+    mainWindow.show()
     sys.exit(app.exec())
 
     pass
