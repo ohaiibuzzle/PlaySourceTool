@@ -31,6 +31,7 @@ class SourceInterface(interface.Ui_SourceMainWindow, QtWidgets.QMainWindow):
         self.actionOpen_Database.triggered.connect(self.open_btn_onClick)
         self.actionSave_Database.triggered.connect(self.save_commandLinkButton_onClick)
         self.actionSave_As.triggered.connect(self.save_as_commandLinkButton_onClick)
+        self.actionClose.triggered.connect(self.close_file_commandLinkButton_onClick)
         self.actionExit.triggered.connect(SourceMainWindow.close)
         self.Button_Add.clicked.connect(self.add_btn_onClick)
         self.Button_Remove.clicked.connect(self.remove_btn_onClick)
@@ -171,6 +172,7 @@ class SourceInterface(interface.Ui_SourceMainWindow, QtWidgets.QMainWindow):
                     json.dump(
                         self.app_list, file, indent=4, cls=IPASourceFormat.JSONEncoder
                     )
+            self.current_file = dialog.selectedFiles()[0]
         self.has_modified = False
 
     def save_as_commandLinkButton_onClick(self):
@@ -187,6 +189,30 @@ class SourceInterface(interface.Ui_SourceMainWindow, QtWidgets.QMainWindow):
                     self.app_list, file, indent=4, cls=IPASourceFormat.JSONEncoder
                 )
         self.has_modified = False
+
+    def close_file_commandLinkButton_onClick(self):
+        # Close the file
+        if self.has_modified:
+            # Ask the user if they want to save
+            msg = QtWidgets.QMessageBox()
+            msg.setIcon(QtWidgets.QMessageBox.Icon.Question)
+            msg.setText("Do you want to save your changes?")
+            msg.setStandardButtons(
+                QtWidgets.QMessageBox.StandardButton.Yes
+                | QtWidgets.QMessageBox.StandardButton.No
+                | QtWidgets.QMessageBox.StandardButton.Cancel
+            )
+            msg.setDefaultButton(QtWidgets.QMessageBox.StandardButton.Yes)
+            ret = msg.exec()
+            if ret == QtWidgets.QMessageBox.StandardButton.Yes:
+                self.save_commandLinkButton_onClick()
+            elif ret == QtWidgets.QMessageBox.StandardButton.Cancel:
+                return
+
+        self.app_list = []
+        self.update_table()
+        self.has_modified = False
+        self.current_file = None
 
     def closeEvent(self, event):
         # If the user has modified the file, ask if they want to save
