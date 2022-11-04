@@ -18,6 +18,7 @@ class SourceInterface(interface.Ui_SourceMainWindow):
 
     @app_list.setter
     def app_list(self, value: list):
+        # Look out for duplicates
         self._app_list = value
         self.update_table()
 
@@ -110,8 +111,8 @@ class SourceInterface(interface.Ui_SourceMainWindow):
         self.app_list = self.app_list + []
 
     def remove_btn_onClick(self):
-        # If nothing is selected, return
-        if self.AppsTable.currentRow() == -1:
+        # If nothing is selected, or list is empty, return
+        if self.AppsTable.currentRow() == -1 or not self.app_list:
             return
         # Remove the selected app from the list
         self.app_list.pop(self.AppsTable.currentRow())
