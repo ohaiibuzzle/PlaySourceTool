@@ -50,6 +50,9 @@ class SourceInterface(interface.Ui_SourceMainWindow, QtWidgets.QMainWindow):
         self.has_modified = True
 
     def open_btn_onClick(self):
+        if not self.close_file_commandLinkButton_onClick():
+            return
+
         # Open a file selection dialog
         dialog = QtWidgets.QFileDialog()
         dialog.setFileMode(QtWidgets.QFileDialog.FileMode.ExistingFile)
@@ -207,12 +210,13 @@ class SourceInterface(interface.Ui_SourceMainWindow, QtWidgets.QMainWindow):
             if ret == QtWidgets.QMessageBox.StandardButton.Yes:
                 self.save_commandLinkButton_onClick()
             elif ret == QtWidgets.QMessageBox.StandardButton.Cancel:
-                return
+                return False
 
         self.app_list = []
         self.update_table()
         self.has_modified = False
         self.current_file = None
+        return True
 
     def closeEvent(self, event):
         # If the user has modified the file, ask if they want to save
