@@ -17,11 +17,19 @@ jobs:
           pip3 install -r requirements-dev.txt
       - name: Build binaries for macOS using PyInstaller
         run: python3 -m PyInstaller -w -F -y -n "IPA Source Generator" -i src/icon.png --clean src/main.py
+      - name: Copies the built binary to the artifacts folder with a shortcut to Applications
+        run: |
+          mkdir -p artifacts
+          cp -r dist/IPA\ Source\ Generator.app artifacts/
+          ln -s /Applications artifacts/Applications
+      - name: Create a DMG of the artifacts folder
+        run: |
+          hdiutil create -volname "IPA Source Generator" -srcfolder artifacts -ov -format UDZO IPA_Source_Generator.dmg
       - name: Upload binaries for macOS
         uses: actions/upload-artifact@v2
         with:
-          name: ipa-source-generator-macos-app
-          path: dist/IPA Source Generator.app
+          name: ipa-source-generator-macos-dmg
+          path: IPA_Source_Generator.dmg
 
   build-windows:
     runs-on: windows-latest
