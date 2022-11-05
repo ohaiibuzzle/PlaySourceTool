@@ -35,6 +35,8 @@ class SourceInterface(interface.Ui_SourceMainWindow, QtWidgets.QMainWindow):
         self.actionExit.triggered.connect(SourceMainWindow.close)
         self.Button_Add.clicked.connect(self.add_btn_onClick)
         self.Button_Remove.clicked.connect(self.remove_btn_onClick)
+        self.Button_Move_Up.clicked.connect(self.button_move_up_onClick)
+        self.Button_Move_Down.clicked.connect(self.button_move_down_onClick)
         self.actionAdd_Item.triggered.connect(self.add_btn_onClick)
         self.actionRemove_Item.triggered.connect(self.remove_btn_onClick)
         self.AppsTable.doubleClicked.connect(self.table_double_click)
@@ -153,6 +155,46 @@ class SourceInterface(interface.Ui_SourceMainWindow, QtWidgets.QMainWindow):
             return
 
         self.app_list[index] = new_item
+        self.update_table()
+        self.has_modified = True
+
+    def button_move_up_onClick(self):
+        # If nothing is selected, or list is empty, return
+        if self.AppsTable.currentRow() == -1 or not self.app_list:
+            return
+
+        # If the item is already at the top, return
+        if self.AppsTable.currentRow() == 0:
+            return
+
+        # Move the item up
+        self.app_list.insert(
+            self.AppsTable.currentRow() - 1,
+            self.app_list.pop(self.AppsTable.currentRow()),
+        )
+        # Also move selection up
+        self.AppsTable.selectRow(self.AppsTable.currentRow() - 1)
+
+        self.update_table()
+        self.has_modified = True
+
+    def button_move_down_onClick(self):
+        # If nothing is selected, or list is empty, return
+        if self.AppsTable.currentRow() == -1 or not self.app_list:
+            return
+
+        # If the item is already at the bottom, return
+        if self.AppsTable.currentRow() == len(self.app_list) - 1:
+            return
+
+        # Move the item down
+        self.app_list.insert(
+            self.AppsTable.currentRow() + 1,
+            self.app_list.pop(self.AppsTable.currentRow()),
+        )
+        # Also move selection down
+        self.AppsTable.selectRow(self.AppsTable.currentRow() + 1)
+
         self.update_table()
         self.has_modified = True
 

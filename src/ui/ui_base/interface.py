@@ -58,10 +58,6 @@ class Ui_SourceMainWindow(object):
         self.verticalLayout.setSpacing(0)
         self.verticalLayout.setObjectName(u"verticalLayout")
         self.verticalLayout.setSizeConstraint(QLayout.SetMinimumSize)
-        self.verticalSpacer = QSpacerItem(20, 40, QSizePolicy.Minimum, QSizePolicy.Expanding)
-
-        self.verticalLayout.addItem(self.verticalSpacer)
-
         self.Button_Add = QPushButton(self.centralwidget)
         self.Button_Add.setObjectName(u"Button_Add")
         sizePolicy1 = QSizePolicy(QSizePolicy.Minimum, QSizePolicy.Fixed)
@@ -77,6 +73,20 @@ class Ui_SourceMainWindow(object):
         self.Button_Remove.setObjectName(u"Button_Remove")
 
         self.verticalLayout.addWidget(self.Button_Remove)
+
+        self.verticalSpacer = QSpacerItem(20, 40, QSizePolicy.Minimum, QSizePolicy.Expanding)
+
+        self.verticalLayout.addItem(self.verticalSpacer)
+
+        self.Button_Move_Up = QPushButton(self.centralwidget)
+        self.Button_Move_Up.setObjectName(u"Button_Move_Up")
+
+        self.verticalLayout.addWidget(self.Button_Move_Up)
+
+        self.Button_Move_Down = QPushButton(self.centralwidget)
+        self.Button_Move_Down.setObjectName(u"Button_Move_Down")
+
+        self.verticalLayout.addWidget(self.Button_Move_Down)
 
 
         self.gridLayout.addLayout(self.verticalLayout, 0, 1, 1, 1)
@@ -160,6 +170,8 @@ class Ui_SourceMainWindow(object):
         self.actionClose.setText(QCoreApplication.translate("SourceMainWindow", u"Close", None))
         self.Button_Add.setText(QCoreApplication.translate("SourceMainWindow", u"Add", None))
         self.Button_Remove.setText(QCoreApplication.translate("SourceMainWindow", u"Remove", None))
+        self.Button_Move_Up.setText(QCoreApplication.translate("SourceMainWindow", u"Move Up", None))
+        self.Button_Move_Down.setText(QCoreApplication.translate("SourceMainWindow", u"Move Down", None))
         ___qtablewidgetitem = self.AppsTable.horizontalHeaderItem(0)
         ___qtablewidgetitem.setText(QCoreApplication.translate("SourceMainWindow", u"Bundle ID", None));
         ___qtablewidgetitem1 = self.AppsTable.horizontalHeaderItem(1)
