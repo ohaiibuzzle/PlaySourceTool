@@ -16,12 +16,12 @@ jobs:
           pip3 install -r requirements.txt
           pip3 install -r requirements-dev.txt
       - name: Build binaries for macOS using PyInstaller
-        run: pyinstaller -w -F -y -n "IPA Source Generator" -i src/icon.png --clean src/main.py
+        run: python3 -m PyInstaller -w -F -y -n "IPA Source Generator" -i src/icon.png --clean src/main.py
       - name: Upload binaries for macOS
         uses: actions/upload-artifact@v2
         with:
           name: ipa-source-generator-macos-app
-          path: dist/IPA\ Source\ Generator.app
+          path: dist/IPA Source Generator.app
 
   build-windows:
     runs-on: windows-latest
@@ -38,4 +38,4 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: ipa-source-generator-windows-exe
-          path: dist/IPA\ Source\ Generator.exe
+          path: dist/IPA Source Generator.exe
