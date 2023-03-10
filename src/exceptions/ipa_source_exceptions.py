@@ -11,6 +11,9 @@ class LinkIsNotHTTPS(IPASourceException):
     message = "This link should start with https://"
     pass
 
+class LinkIsNotFileNorHTTPS(IPASourceException):
+    message = "This link should start with either https:// or file://"
+    pass
 
 class LinkIsNotIPA(IPASourceException):
     message = "This link should end with .ipa"

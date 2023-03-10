@@ -49,8 +49,8 @@ class IPASourceFormat:
             if not self.link.endswith(".ipa"):
                 raise ipa_source_exceptions.LinkIsNotIPA
 
-            if not self.link.startswith("https://"):
-                raise ipa_source_exceptions.LinkIsNotHTTPS
+            if not (self.link.startswith("https://") or self.link.startswith("file://")):
+                raise ipa_source_exceptions.LinkIsNotFileNorHTTPS
 
         return True
 
